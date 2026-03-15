@@ -1,4 +1,4 @@
--- ASSIGNMENT 2 (Corrected)
+-- ASSIGNMENT 2 
 
 -- A) Member Table
 CREATE TABLE MEMBER_1151(
