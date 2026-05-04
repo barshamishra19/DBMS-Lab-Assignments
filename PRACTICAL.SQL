@@ -82,14 +82,20 @@ SELECT * FROM EMP ;
 DELETE FROM EMPLOYEE WHERE EID IN ('E3', 'E4');
 --QUERIES 
 
+-- Increase the salary by 5% for employees in the 'D1' Department.
+
 UPDATE EMP
 SET SALARY=SALARY*1.05
 WHERE EID IN(SELECT EID FROM WORK WHERE DID='D1');
+
+--Display the project name where an employee with minimum salary works.
 
 SELECT DISTINCT P.PNAME
 FROM PROJECT P
 JOIN WORK W ON P.DID=W.DID
 WHERE W.EID IN (SELECT EID FROM EMP WHERE SALARY=(SELECT MIN(SALARY)FROM EMP));
+
+--Display the name of the employee who is working for all Departments.
 
 SELECT E.NAME
 FROM EMP E
@@ -97,9 +103,7 @@ JOIN WORK W ON E.EID=W.EID
 GROUP BY E.EID,E.NAME
 HAVING COUNT(DISTINCT W.DID)= (SELECT COUNT(*) FROM DEPARTMENT);
 
-INSERT INTO DEPT(DID, DNAME, MGRID) 
-VALUES ('D' || seq_dept.NEXTVAL, 'IT', 'E02');
-
+---1. Display employee name and city initials ('K', 'P', 'M', 'O') ordered by salary.
 
 SELECT ENAME 
       CASE 
@@ -111,12 +115,15 @@ SELECT ENAME
 FROM EMP
 ORDER BY SALARY ASC;
 
+--Find the department name where the most experienced employee works.
+
 SELECT D.DNAME
 FROM DEPT D
 JOIN WORK W ON D.DID=W.DID
 JOIN EMP E ON W.EID=E.EID
 WHERE E.EXP=(SELECT MAX(EXP) FROM EMP); 
 
+--Find project names where two or more employees are working.
 
 SELECT P.PNAME
 FROM PRO P
