@@ -123,3 +123,44 @@ FROM PRO P
 JOIN WORK W ON P.DID=W.DID
 GROUP BY P.NAME
 HAIVING COUNT (DISTINCT W.EID)>=2;
+
+
+
+--PLSQL 
+
+DECLARE
+  v_name VARCHAR2(50);
+  v_sal  NUMBER;
+BEGIN
+  -- '&' takes user input
+  SELECT UPPER(ENAME), SALARY INTO v_name, v_sal 
+  FROM EMPLOYEE WHERE EID = '&Enter_EID';
+
+  DBMS_OUTPUT.PUT_LINE('NAME: ' || v_name || ' | SALARY: ' || v_sal);
+END;
+/
+
+
+DECLARE
+  n NUMBER := &input_num;
+  c NUMBER := 0;
+BEGIN
+  FOR i IN 2..n/2 LOOP
+    IF MOD(n, i) = 0 THEN c := 1; END IF;
+  END LOOP;
+
+  IF c = 0 AND n > 1 THEN DBMS_OUTPUT.PUT_LINE('PRIME');
+  ELSE DBMS_OUTPUT.PUT_LINE('NOT PRIME'); END IF;
+END;
+/
+
+
+DECLARE
+  CURSOR c1 IS SELECT EID, ENAME FROM EMPLOYEE;
+BEGIN
+  -- Shortest way: FOR loop automatically opens, fetches, and closes the cursor
+  FOR rec IN c1 LOOP
+    DBMS_OUTPUT.PUT_LINE(rec.EID || ' - ' || rec.ENAME);
+  END LOOP;
+END;
+/
